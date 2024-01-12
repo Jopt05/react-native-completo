@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import { styles } from '../theme/appTheme'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { TouchableIcon } from '../components/TouchableIcon';
 
 export const Tab1Screen = () => {
   return (
@@ -11,7 +12,12 @@ export const Tab1Screen = () => {
         </Text>
 
         <Text>
-          <Icon name='airplane-outline' size={50} color='red' />
+          <TouchableIcon IconName='airplane-outline'/>
+          <TouchableIcon IconName='airplane-outline'/>
+          <TouchableIcon IconName='airplane-outline'/>
+          <TouchableIcon IconName='airplane-outline'/>
+          <TouchableIcon IconName='airplane-outline'/>
+          <TouchableIcon IconName='airplane-outline'/>
         </Text>
     </View>
   )

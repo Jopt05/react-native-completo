@@ -5,14 +5,25 @@ import { StackNavigator } from './src/navigatior/StackNavigator';
 import { MenuLateralBasico } from './src/navigatior/MenuLateralBasico';
 import { MenuLateral } from './src/navigatior/MenuLateral';
 import { Tabs } from './src/navigatior/Tabs';
+import { AuthProvider } from './src/context/AuthContext';
 
 export const App = () => {
   return (
     <NavigationContainer>
-      {/* <StackNavigator /> */}
-      <MenuLateral />
-      {/* <Tabs /> */}
+      <AppState>
+        {/* <StackNavigator /> */}
+        <MenuLateral />
+        {/* <Tabs /> */}
+      </AppState>
     </NavigationContainer>
+  )
+}
+
+const AppState = ({ children }: any) => {
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
   )
 }
 
