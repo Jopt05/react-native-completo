@@ -46,6 +46,16 @@ const menuItems: MenuItem[] = [
     icon: 'download-outline',
     components: 'InfiniteScrollScreen'
   },
+  {
+    name: 'Slide Screen',
+    icon: 'flower-outline',
+    components: 'SlidesScreen'
+  },
+  {
+    name: 'Change Theme Screen',
+    icon: 'flask-outline',
+    components: 'ChangeThemeScreen'
+  },
 ]
 
 export const HomeScreen = () => {
