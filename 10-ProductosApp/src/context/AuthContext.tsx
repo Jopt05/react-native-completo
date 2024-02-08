@@ -1,5 +1,5 @@
 import { createContext, useEffect, useReducer } from "react";
-import { LoginData, LoginResponse, Usuario } from "../interfaces/appInterfaces";
+import { LoginData, LoginResponse, RegisterData, Usuario } from "../interfaces/appInterfaces";
 import { AuthState, authReducer } from "./authReducer";
 import CafeApi from "../api/cafeApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,7 +10,7 @@ type AuthContextProps = {
     user: Usuario | null;
     // Permite revisar si aun estoy logeando
     status: 'checking' | 'authenticated' | 'not-authenticated';
-    signUp: () => void;
+    signUp: (registerData: RegisterData) => void;
     signIn: (loginData: LoginData) => void;
     logOut: () => void;
     removeError: () => void;
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: any) => {
 
             await AsyncStorage.setItem('token', response.data.token);
             
-        } catch (error) {
+        } catch (error: any) {
             console.log(error.response.data);
             dispatch({
                 type: 'addError',
@@ -79,9 +79,39 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
     
-    const signUp = () => {};
+    const signUp = async({ correo, nombre, password }: RegisterData) => {
+        try {
 
-    const logOut = () => {};
+            const response = await CafeApi.post<LoginResponse>('/usuarios', {
+                correo,
+                nombre,
+                password
+            });
+            
+            dispatch({
+                type: 'signUp',
+                payload: {
+                    token: response.data.token,
+                    user: response.data.usuario
+                }
+            })
+            
+        } catch (error: any) {
+            console.log(error.response.data);
+            dispatch({
+                type: 'addError',
+                payload: error.response.data.msg || 'Información incorrecta'
+            })
+        }
+    };
+
+    const logOut = async() => {
+        await AsyncStorage.removeItem('token');
+
+        dispatch({
+            type: 'logout'
+        })
+    };
 
     const removeError = () => {
         dispatch({

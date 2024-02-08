@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Keyboard, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { WhiteLogo } from '../components/WhiteLogo'
 import loginStyle from '../theme/loginTheme'
 import { useForm } from '../hooks/useForm'
 import { StackScreenProps } from '@react-navigation/stack'
+import { AuthContext } from '../context/AuthContext'
 
 interface Props extends StackScreenProps<any, any>{}
 
 export const RegisterScreen = ({ navigation }: Props) => {
+
+  const { signUp } = useContext( AuthContext );
 
   const { name, correo, password, onChange } = useForm({
     name: '',
@@ -18,6 +21,12 @@ export const RegisterScreen = ({ navigation }: Props) => {
   const onRegister = () => {
     console.log("Register")
     Keyboard.dismiss();
+
+    signUp({
+      correo: correo,
+      nombre: name,
+      password: password
+    })
   }
 
   return (
